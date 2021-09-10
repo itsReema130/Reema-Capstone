@@ -39,8 +39,8 @@ def create_app(test_config=None):
         movies = Movies.query.all()
         if len(movies) == 0:
             abort(404)
-        return jsonify({'success': True, 'actors': [movie.format()
-                       for movie in movies]}), 200
+        else:
+            return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
