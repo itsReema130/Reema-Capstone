@@ -26,9 +26,11 @@ def create_app(test_config=None):
         if excited == 'true':
             greeting = greeting + "!!!!!"
         return  greeting
+        
     # *********************************************
     #           Movies                            #
     # *********************************************
+
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def view_movies(payload):
