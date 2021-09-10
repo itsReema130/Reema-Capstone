@@ -33,14 +33,14 @@ def create_app(test_config=None):
     #           Movies                            #
     # *********************************************
 
-    @app.route('/movies', methods=['GET'])
-    @requires_auth('get:movies')
-    def view_movies(payload):
-        movies = Movies.query.all()
-        if len(movies) == 0:
-            abort(404)
-        else:
-            return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
+    # @app.route('/movies', methods=['GET'])
+    # @requires_auth('get:movies')
+    # def view_movies(token):
+    #     movies = Movies.query.all()
+    #     if len(movies) == 0:
+    #         abort(404)
+    #     else:
+    #         return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
 
     return app
 
