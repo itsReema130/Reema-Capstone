@@ -39,8 +39,8 @@ def create_app(test_config=None):
         movies = Movies.query.all()
         if len(movies) == 0:
             abort(404)
-        else:
-            return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
+      
+        return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
 
     return app
 
