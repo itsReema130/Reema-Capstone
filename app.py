@@ -9,7 +9,7 @@ from auth import AuthError, requires_auth
 from datetime import datetime
 
 def create_app(test_config=None):
-
+    
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
@@ -48,6 +48,9 @@ def create_app(test_config=None):
         'movies':formatted_movies,
         'total_movies':len(formatted_movies)
             }), 200
+
+
+
     return app
 
 app = create_app()
