@@ -35,13 +35,19 @@ def create_app(test_config=None):
 
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
-    def view_movies(token):
-        movies = Movies.query.all()
-        if len(movies) == 0:
-            abort(404)
-      
-        return jsonify({'success': True, 'actors': [movie.format() for movie in movies]}), 200
+    def get_movies(payload):
 
+        formatted_movies= [movie.format() for movie in
+        Movies.query.all()]
+    
+        if not formatted_movies:
+            abort(404)
+
+        return jsonify({
+        'success': True,
+        'movies':formatted_movies,
+        'total_movies':len(formatted_movies)
+            }), 200
     return app
 
 app = create_app()
