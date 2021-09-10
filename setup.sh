@@ -1,0 +1,10 @@
+
+
+export ALGORITHMS='RS256'
+export API_AUDIENCE=''
+export DATABASE_URL=''
+export EXCITED= 'true'
+
+export CASTING_ASSISTANT_TOKEN=''
+export CASTING_DIRECTOR_TOKEN=''
+export EXECUTIVE_PRODUCER_TOKEN=''
