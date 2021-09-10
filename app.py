@@ -43,11 +43,13 @@ def create_app(test_config=None):
         if not formatted_movies:
             abort(404)
 
-        return jsonify({
+        else:
+            return jsonify({
         'success': True,
         'movies':formatted_movies,
         'total_movies':len(formatted_movies)
-            }), 200
+            }), 200 ,get_movies
+     
 
 
 
