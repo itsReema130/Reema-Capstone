@@ -51,17 +51,16 @@ def create_app(test_config=None):
     @requires_auth('post:movies')
     def post_movies(payload):
         res = request.get_json()
-
         movies = []
         if not res:
             abort(400)
         try:
             index = 0
-            for movie in res['actor_id']:
+            for movie in res['id']:
                 movie = Movies(
                     title=res['title'],
-                    releaseDate=datetime.datetime.strptime(res['releaseDate'], '%a, %d %b %Y %H:%M:%S %Z'),
-                    actor_id=res['actor_id'][index]
+                    releaseDate=datetime.datetime.strptime(res['release_date'], '%a, %d %b %Y %H:%M:%S %Z'),
+                    movie_id=res['id'][index]
                 )
                 movies.append(movie.format())
                 movie.insert()
