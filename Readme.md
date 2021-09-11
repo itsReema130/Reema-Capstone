@@ -192,9 +192,15 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "actor_id": 2
-    }
+    "Actor": {
+        "age": "53",
+        "gender": "Female",
+        "id": 2,
+        "name": "Sara"
+    },
+    "deleted": 2,
+    "success": true
+}
     ```
 
 #### DELETE /movies/id

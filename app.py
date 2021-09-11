@@ -186,6 +186,24 @@ def create_app(test_config=None):
                 "success": True,
                 "Actor": actor.format()
             }), 200
+    @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    @requires_auth('delete:actor')
+    def delete_actors(payload, actor_id):
+        try:
+            actor = Actors.query.filter(
+                                    Actors.id == actor_id).one_or_none()
+            if actor is None:
+                abort(404)
+
+            actor.delete()
+            return jsonify({
+                'success': True,
+                'deleted': actor_id,
+                'Actor':actor.format()}), 200
+
+        except Exception:
+            print(sys.exc_info())
+            abort(422)
     # ----------------------------------------------------------------------------#
     # error handlers
     # ----------------------------------------------------------------------------#
