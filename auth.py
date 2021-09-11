@@ -40,7 +40,7 @@ def get_token_auth_header():
         abort(401)
     token = request.headers["Authorization"]
     
-    auth= token.split(' ')
+    auth= token.split('.')
     
     print("Token: " + token + "," + str(len(auth)), flush=True)
     if len(auth) != 2:
