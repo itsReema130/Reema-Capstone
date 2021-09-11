@@ -1,11 +1,12 @@
 import os
 import sys
-from flask import Flask, request, abort, jsonify, render_template
+from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Actors, Movies
 from auth import AuthError, requires_auth
 from datetime import datetime
+
 
 
 def create_app(test_config=None):
@@ -47,19 +48,22 @@ def create_app(test_config=None):
             'movies': movies
         })
 
-    @app.route('/movies', methods=['POST'])
+    @app.route('/movies/add', methods=['POST'])
     @requires_auth('post:movies')
     def add_movies(payload):
         try:
-            request_data = request.get_json(force=True)
+            request_data = request.get_json(silent=True)
             print(request_data)
             release = datetime.utcnow()
+           
             if 'title' not in request_data:
+                
                 abort(400)
-
+ 
             if 'release_date' in request_data:
+                
                 release = request_data['release_date']
-
+            
             movie = Movies(title=request_data['title'], release=release)
             movie.insert()
 
