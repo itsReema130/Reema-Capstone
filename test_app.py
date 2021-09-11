@@ -65,16 +65,140 @@ class AgencyTestCase(unittest.TestCase):
         """Executed after reach test"""
 
         pass
-# ----------------------------------------------------------------------------#
-    # Tests for success behavior of each endpoint
-    # ----------------------------------------------------------------------------#
-
-    # -----------------------------Movies API Test--------------------------------#
+ # -----------------------------Movies API Test--------------------------------#
     # the user have enough permissions- casting assistant can view the movies
     def test_get_movies_success(self):
         response = self.client().get('/movies', headers= self.casting_assistant)
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
+    
+    # the user have enough permissions- excecutive producer can create movies
+    def test_post_movie_success(self):
+        response = self.client().post(
+                                      '/movies',
+                                      headers=self.executive_producer,
+                                      json=self.new_movie)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+    
+    # the user have enough permissions
+    def test_delete_movie_success(self):
+        movie = Movies.query.all()[0]
+        response = self.client().delete('/movies/{}'.format(movie.id),
+                                        headers=self.executive_producer)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    # the user have enough permissions
+    def test_patch_movies_success(self):
+        movie = Movies.query.all()[0]
+        response = self.client().patch('/movies/{}'.format(movie.id),
+                                       headers=self.executive_producer,
+                                       json=self.new_movie)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+    
+    # -----------------------------Actors API Test--------------------------------#
+
+    # the user have enough permissions
+    def test_get_actors_success(self):
+        response = self.client().get('/actors', headers= self.casting_assistant)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    # the user have enough permissions
+    def test_post_actor_success(self):
+        response = self.client().post('/actors',
+                                      headers=self.executive_producer,
+                                      json=self.new_actor)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+    
+    # the user have enough permissions
+    def test_delete_actor_success(self):
+        actor = Actors.query.all()[0]
+        response = self.client().delete('/actors/{}'.format(actor.id),
+                                        headers=self.executive_producer)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    # the user have enough permissions
+    def test_patch_actor_success(self):
+        actor = Actors.query.all()[0]
+        response = self.client().patch('/actors/{}'.format(actor.id),
+                                       headers=self.executive_producer,
+                                       json=self.new_actor)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    # ----------------------------------------------------------------------------#
+    # Tests for error behavior of each endpoint
+    # ----------------------------------------------------------------------------#
+
+    # -----------------------------Movies API Test--------------------------------#
+    # the user does not have permissions
+    def test_post_movie_failure(self):
+        response = self.client().post(
+                                    '/movies',
+                                    headers=self.casting_director,
+                                    json=self.new_movie)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+    # the user does not have permissions   
+    def test_delete_movie_failure(self):
+        movie = Movies.query.all()[0]
+        response = self.client().delete('/movies/{}'.format(movie.id),
+                                        headers=self.casting_director)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+    
+    # no TOKEN provided 
+    def test_patch_movies_failure(self):
+        movie = Movies.query.all()[0]
+        response = self.client().patch('/movies/{}'.format(movie.id),
+                                       json=self.new_movie)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+    
+    # -----------------------------Actors API Test--------------------------------#
+
+    # no TOKEN provided
+    def test_post_actor_failure(self):
+        response = self.client().post('/actors', json=self.new_actor)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+    # no TOKEN provided
+    def test_delete_actor_failure(self):
+        actor = Actors.query.all()[0]
+        response = self.client().delete('/actors/{}'.format(actor.id))
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+    # no TOKEN provided
+    def test_patch_actor_failure(self):
+        actor = Actors.query.all()[0]
+        response = self.client().patch('/actors/{}'.format(actor.id),
+                                       json=self.new_actor)
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+
+# Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
