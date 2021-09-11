@@ -39,8 +39,7 @@ def create_app(test_config=None):
         if len(movies) > 0:
            return jsonify({'success': True, 'actors': [movie.format()
                        for movie in movies]}), 200
-        else:
-            abort(404)
+        return view_movies
 
  
 
