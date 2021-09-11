@@ -176,9 +176,15 @@ def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
+            #use the get_token_auth_header method to get the token
             token = get_token_auth_header()
+            #use the verify_decode_jwt method to decode the jwt
             payload = verify_decode_jwt(token)
+            # check_permissions method validate claims and check the
+            # requested permission
             check_permissions(permission, payload)
+            #return the decorator which passes the decoded payload to the
+            #decorated method
             return f(payload, *args, **kwargs)
 
         return wrapper
