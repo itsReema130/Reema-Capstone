@@ -53,7 +53,9 @@ def create_app(test_config=None):
         res = request.get_json()
         movies = []
         if not res:
+            print(res)
             abort(400)
+            
         try:
             index = 0
             for movie in res['id']:
