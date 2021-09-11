@@ -67,7 +67,36 @@ def create_app(test_config=None):
                     "movies":data}),200
 
         
+    @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    @requires_auth('patch:movie')
+    def update_movies(payload, movie_id):
+        body = request.get_json()
+        movie = Movies.query.filter(Movies.id == movie_id).one_or_none()
+        print(movie)
+        if movie is None:
+            abort(404)
 
+        new_title = body.get('title', None)
+        new_release_date = body.get('release_date', None)
+
+        if new_title is not None:
+            movie.title = new_title
+        else:
+            movie.title = movie.title
+
+        if new_release_date is not None:
+            movie.release_date = new_release_date
+        else:
+            movie.release_date = movie.release_date
+
+        try:
+            movie.update()
+        except Exception:
+            abort(422)
+        return jsonify({
+                "success": True,
+                "Movie": movie.format()
+            }), 200
 
     # ----------------------------------------------------------------------------#
     # error handlers

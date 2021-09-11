@@ -236,7 +236,7 @@ This section will contain all the endpoints with their response examples to make
     - the ID of the created movie.
 
 - Sample Request: 
-    ```curl -d '{"title": "Lockdown"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "POST" https://fsnd-capstone-asiri.herokuapp.com/movies```
+    ```curl -d '{"title": "Rick and morty"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "POST" https://reema-capstone.herokuapp.com/movies/add```
 
 - Arguments: 
     - None
