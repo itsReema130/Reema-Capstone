@@ -43,7 +43,7 @@ def get_token_auth_header():
     auth= token.split('.')
     
     print("Token: " + token + "," + str(len(auth)), flush=True)
-    if len(auth) != 2:
+    if len(auth) != 3:
         abort(401)
     elif auth[0].lower() != 'bearer':
         abort(401)
