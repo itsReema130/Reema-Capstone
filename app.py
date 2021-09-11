@@ -127,6 +127,29 @@ def create_app(test_config=None):
             abort(404)
         return jsonify({'success': True, 'actors': [actor.format()
                         for actor in actors]}), 200
+    @app.route('/actors', methods=['POST'])
+    @requires_auth('post:actors')
+    def add_actors(payload):
+        try:
+            request_body = request.get_json()
+            if request_body is None:
+                abort(422)
+            new_actor = Actors(
+                request_body['name'],
+                request_body['age'],
+                request_body['gender']
+                )
+            new_actor.insert()
+            return jsonify({'success': True, 
+            'name':request_body['name']
+            , 'Age':request_body['age']
+            , 'Gender':request_body['gender']
+            }), 200
+
+        except Exception:
+            print(sys.exc_info())
+            abort(500)
+
 
     # ----------------------------------------------------------------------------#
     # error handlers
