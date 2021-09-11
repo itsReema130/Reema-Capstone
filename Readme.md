@@ -166,7 +166,7 @@ This section will contain all the endpoints with their response examples to make
 - Return: 
     - the deleted actor ID and result of success state.
 
-- Sample Request: ```curl -X "DELETE" https://fsnd-capstone-asiri.herokuapp.com/actors/2```
+- Sample Request: ```curl -X "DELETE" https://reema-capstone.herokuapp.com/actors/2```
 
 - Arguments: 
     - it take the id of the actor in the URL after the ```actors/```
@@ -184,7 +184,7 @@ This section will contain all the endpoints with their response examples to make
 - Return: 
     - the deleted movie ID and result of success state.
 
-- Sample Request: ```curl -X "DELETE" https://fsnd-capstone-asiri.herokuapp.com/movies/5```
+- Sample Request: ```curl -X "DELETE" https://reema-capstone.herokuapp.com/movies/1```
 
 - Arguments: 
     - it take the id of the movie in the URL after the ```movies/```
@@ -192,9 +192,9 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "movie_id": 2
-    }
+    "deleted": 1,
+    "success": true
+}
     ```
 
 #### POST /actors
@@ -205,7 +205,7 @@ This section will contain all the endpoints with their response examples to make
     - the ID of the created actor.
 
 - Sample Request: 
-    ```curl -d '{"name": "Omar Mohammed", "age": 30, "gender": "Male"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "POST" https://fsnd-capstone-asiri.herokuapp.com/actors```
+    ```curl -d '{"name": "Omar Mohammed", "age": 30, "gender": "Male"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "POST" https://reema-capstone.herokuapp.com/actors```
 
 - Arguments: 
     - None
@@ -264,7 +264,7 @@ This section will contain all the endpoints with their response examples to make
     - the ID of the modified actor.
 
 - Sample Request: 
-    ```curl -d '{"name": "omar mohammed", "age": 28, "gender": "male"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://fsnd-capstone-asiri.herokuapp.com/actors/15```
+    ```curl -d '{"name": "omar mohammed", "age": 28, "gender": "male"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://reema-capstone.herokuapp.com/actors/15```
 
 - Arguments: 
     - the ID of the actor that need to modified.
@@ -295,7 +295,7 @@ This section will contain all the endpoints with their response examples to make
     - the ID of the modified movie.
 
 - Sample Request: 
-    ```curl -d '{"title": "lockdown"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://fsnd-capstone-asiri.herokuapp.com/movies/87```
+    ```curl -d '{"title": "lockdown"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://reema-capstone.herokuapp.com/movies/1```
 
 - Arguments: 
     - the ID of the movie that need to modified.
@@ -307,14 +307,13 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "movie": {
-            "id": 87,
-            "title": "lockdown",
-            "release": "7 Oct, 2020"
-        },
-        "movie_id": 87
-    }
+    "Movie": {
+        "id": 1,
+        "release date": "Mon, 02 Sep 2013 00:00:00 GMT",
+        "title": "Hi"
+    },
+    "success": true
+}
     ```
 
 ## Authentication and Permissions

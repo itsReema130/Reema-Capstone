@@ -98,6 +98,24 @@ def create_app(test_config=None):
                 "Movie": movie.format()
             }), 200
 
+
+    @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    @requires_auth('delete:movie')
+    def delete_movies(payload, movie_id):
+        try:
+            movie = Movies.query.filter(
+                                    Movies.id == movie_id).one_or_none()
+            if movie is None:
+                abort(404)
+
+            movie.delete()
+            return jsonify({
+                'success': True,
+                'deleted': movie_id}), 200
+
+        except Exception:
+            print(sys.exc_info())
+            abort(422)
     # ----------------------------------------------------------------------------#
     # error handlers
     # ----------------------------------------------------------------------------#
