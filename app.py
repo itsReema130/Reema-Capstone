@@ -51,19 +51,18 @@ def create_app(test_config=None):
     @requires_auth('post:movies')
     def add_movies(payload):
         body = request.get_json()
-        add_id = body.get('id', None)
         add_title = body.get('title', None)
         add_release_date = body.get('release_date', None)
      
 
-        if not (add_id and add_title and add_release_date):
+        if not (add_title and add_release_date):
             abort(
                 400, {
                     'message': 'Please, Fill all the required fields'})
 
         try:
             # insert the new Q to the database
-            movie = Movies(mId=add_id,
+            movie = Movies(
                                 title=add_title,
                                 release_date=add_release_date)
             movie.insert()
