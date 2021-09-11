@@ -34,7 +34,7 @@ def create_app(test_config=None):
 
     @app.route('/movies')
     @requires_auth('get:movies')
-    def get_movies(jwt):
+    def get_movies(payload):
         selection = Movies.query.all()
 
         movies = []
