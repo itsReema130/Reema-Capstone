@@ -32,14 +32,20 @@ def create_app(test_config=None):
             greeting = greeting + "!!!!!"
         return  greeting
 
-    @app.route('/movies', methods=['GET'])
+    @app.route('/movies')
     @requires_auth('get:movies')
-    def view_movies(payload):
-        movies = Movies.query.all()
-        if len(movies) > 0:
-           return jsonify({'success': True, 'actors': [movie.format()
-                       for movie in movies]}), 200
-        return view_movies
+    def get_movies(jwt):
+        selection = Movies.query.all()
+
+        movies = []
+
+        for movie in selection:
+            movies.append(movie.format())
+
+        return jsonify({
+            'status': True,
+            'movies': movies
+        })
 
  
 
@@ -47,6 +53,46 @@ def create_app(test_config=None):
     # ----------------------------------------------------------------------------#
     # error handlers
     # ----------------------------------------------------------------------------#
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({
+          "success": False,
+          "error": 400,
+          "message": "bad request"
+          }), 400
+
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable."
+        }), 422
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": "The server can not find the requested resource."
+        }), 404
+
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        return jsonify({
+            "success": False,
+            "error": 405,
+            "message": "method not allowed"
+            }), 405
+
+    @app.errorhandler(AuthError)
+    def auth_error(error):
+        return jsonify({
+            "success": False,
+            "error": 401,
+            "message": "You are no authorized."
+        }), 401
 
 
 app = create_app()
