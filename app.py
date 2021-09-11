@@ -47,32 +47,34 @@ def create_app(test_config=None):
             'movies': movies
         })
 
-    @app.route('/movies', methods=['POST'])
+    @app.route('/movies/add', methods=['POST'])
     @requires_auth('post:movies')
-    def add_movies(payload):
-        body = request.get_json()
-        add_title = body.get('title', None)
-        add_release_date = body.get('release_date', None)
-     
+    def post_movies(payload):
+        res = request.get_json()
 
-        if not (add_title and add_release_date):
-            abort(
-                400, {
-                    'message': 'Please, Fill all the required fields'})
-
+        movies = []
+        if not res:
+            abort(400)
         try:
-            # insert the new Q to the database
-            movie = Movies(
-                                title=add_title,
-                                release_date=add_release_date)
-            movie.insert()
-            return jsonify(
-                {'success': True,
-                'created': movie.id})
-        except BaseException:
-            # If anything went wrong, handle the 422 error
-            abort(422)
- 
+            index = 0
+            for movie in res['actor_id']:
+                movie = Movies(
+                    title=res['title'],
+                    releaseDate=datetime.datetime.strptime(res['releaseDate'], '%a, %d %b %Y %H:%M:%S %Z'),
+                    actor_id=res['actor_id'][index]
+                )
+                movies.append(movie.format())
+                movie.insert()
+                index += 1
+
+        except Exception as e:
+            print('we couldnt create the object. Reason :', e)
+            abort(500)
+
+        return jsonify({
+            'status': True,
+            'movie': movies
+        })
 
 
     # ----------------------------------------------------------------------------#
