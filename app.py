@@ -52,6 +52,7 @@ def create_app(test_config=None):
     def add_movies(payload):
         try:
             request_data = request.get_json()
+            print(request_data)
             release = datetime.utcnow()
             if 'title' not in request_data:
                 abort(400)
