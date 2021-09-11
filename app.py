@@ -3,6 +3,7 @@ import sys
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from sqlalchemy.sql.expression import true
 from models import setup_db, Actors, Movies
 from auth import AuthError, requires_auth
 from datetime import datetime
@@ -48,32 +49,24 @@ def create_app(test_config=None):
             'movies': movies
         })
 
-    @app.route('/movies/add', methods=['POST'])
+    @app.route("/movies/add", methods=['POST'])
     @requires_auth('post:movies')
-    def add_movies(payload):
-        try:
-            request_data = request.get_json(silent=True)
-            print(request_data)
-            release = datetime.utcnow()
-           
-            if 'title' not in request_data:
-                
-                abort(400)
- 
-            if 'release_date' in request_data:
-                
-                release = request_data['release_date']
-            
-            movie = Movies(title=request_data['title'], release=release)
-            movie.insert()
+    def add_movie(token):        
+            data = request.get_json()
+            if 'title' in data:
+                if data['title'] is None:
+                    abort(400)
+            if 'release_date' in data:
+                if data['release_date'] is None:
+                    abort(400)              
+            new_movie = Movies(title= data['title'],
+                            release_date = data['release_date'])                          
+            new_movie.insert()
+            return jsonify({
+                    "success":True,
+                    "movies":data}),200
 
-            return jsonify({'success': True, 'movie': movie.format(),
-                        'movie_id': movie.id})
-
-        except Exception:
-            print(sys.exc_info())
-            abort(500)
- 
+        
 
 
     # ----------------------------------------------------------------------------#

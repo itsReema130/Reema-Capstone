@@ -248,14 +248,12 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "movie": {
-            "id": 87,
-            "title": "Lockdown",
-            "release": "7 Oct, 2020"
-        },
-        "movie_id": 87
-    }
+    "movies": {
+        "release_date": "2 Sep,2013",
+        "title": "rick and morty"
+    },
+    "success": true
+}
     ```
 
 #### PATCH /actors
