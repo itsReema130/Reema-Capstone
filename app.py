@@ -91,7 +91,7 @@ def create_app(test_config=None):
         return jsonify({
             "success": False,
             "error": 401,
-            "message": "You are no authorized."
+            "message": "unauthorized."
         }), 401
     return app
 
