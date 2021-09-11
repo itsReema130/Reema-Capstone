@@ -50,7 +50,8 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
     def add_movies(payload):
-        body = request.json()
+        body = request.get_json(force=True)
+        print(body)
         add_title = body.get('title', None)
         add_release_date = body.get('release_date', None)
      
