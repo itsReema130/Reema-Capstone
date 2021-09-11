@@ -36,7 +36,7 @@ def create_app(test_config=None):
     @requires_auth('get:movies')
     def view_movies(payload):
         movies = Movies.query.all()
-        if len(movies) == 0:
+        if len(movies) > 0:
            return jsonify({'success': True, 'actors': [movie.format()
                        for movie in movies]}), 200
         else:
