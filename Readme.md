@@ -102,22 +102,40 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-          "success": True,
-          "actors": [
-            {
-              "id": 1,
-              "name": "Nora Othman",
-              "gender": "Female",
-              "age": 20
-            }, 
-            {
-              "id": 5,
-              "name": "Marly Rose",
-              "gender": "Female",
-              "age": 500
-            }
-          ]
-    }
+    "actors": [
+        {
+            "age": "25",
+            "gender": "Female",
+            "id": 1,
+            "name": "Reema sultan"
+        },
+        {
+            "age": "53",
+            "gender": "Female",
+            "id": 2,
+            "name": "Sara"
+        },
+        {
+            "age": "27",
+            "gender": "male",
+            "id": 3,
+            "name": "Mohammad"
+        },
+        {
+            "age": "30",
+            "gender": "male",
+            "id": 4,
+            "name": "Ahmed"
+        },
+        {
+            "age": "18",
+            "gender": "Female",
+            "id": 5,
+            "name": "Arwa"
+        }
+    ],
+    "success": true
+}
     ```
 #### GET /movies
 

@@ -117,6 +117,18 @@ def create_app(test_config=None):
             print(sys.exc_info())
             abort(422)
     # ----------------------------------------------------------------------------#
+    #                       Actor's Route
+    # ----------------------------------------------------------------------------#
+    @app.route('/actors', methods=['GET'])
+    @requires_auth('get:actor')
+    def view_actors(payload):
+        actors = Actors.query.all()
+        if len(actors) == 0:
+            abort(404)
+        return jsonify({'success': True, 'actors': [actor.format()
+                        for actor in actors]}), 200
+
+    # ----------------------------------------------------------------------------#
     # error handlers
     # ----------------------------------------------------------------------------#
 
