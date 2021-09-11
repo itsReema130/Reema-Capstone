@@ -150,7 +150,42 @@ def create_app(test_config=None):
             print(sys.exc_info())
             abort(500)
 
+    @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    @requires_auth('patch:actor')
+    def update_actors(payload, actor_id):
+        body = request.get_json()
+        actor = Actors.query.filter(Actors.id == actor_id).one_or_none()
+        print(actor)
+        if actor is None:
+            abort(404)
 
+        new_name = body.get('name', None)
+        new_age = body.get('age', None)
+        new_gender = body.get('gender', None)
+
+        if new_name is not None:
+            actor.name = new_name
+        else:
+            actor.name = actor.name
+
+        if new_age is not None:
+            actor.age = new_age
+        else:
+            actor.age = actor.age
+
+        if new_gender is not None:
+            actor.gender = new_gender
+        else:
+            actor.gender = actor.gender
+
+        try:
+            actor.update()
+        except Exception:
+            abort(422)
+        return jsonify({
+                "success": True,
+                "Actor": actor.format()
+            }), 200
     # ----------------------------------------------------------------------------#
     # error handlers
     # ----------------------------------------------------------------------------#

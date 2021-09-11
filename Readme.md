@@ -235,15 +235,12 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "actor": {
-            "id": 15,
-            "name": "Omar Mohammed",
-            "gender": "Male",
-            "age": 30
-        },
-        "actor_id": 15
-    }
+    {
+    "Age": "30",
+    "Gender": "Female",
+    "name": "Noura",
+    "success": true
+}
     ```
 
 #### POST /movies
@@ -282,7 +279,7 @@ This section will contain all the endpoints with their response examples to make
     - the ID of the modified actor.
 
 - Sample Request: 
-    ```curl -d '{"name": "omar mohammed", "age": 28, "gender": "male"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://reema-capstone.herokuapp.com/actors/15```
+    ```curl -d '{"name": "Sara", "age": 30, "gender": "Female"}' -H "Content-Type: application/json" -H "Authorization: Bearer <TOKEN>" -X "PATCH" https://reema-capstone.herokuapp.com/actors/1```
 
 - Arguments: 
     - the ID of the actor that need to modified.
@@ -294,15 +291,14 @@ This section will contain all the endpoints with their response examples to make
 - Sample Response:
     ```
     {
-        "success": True,
-        "actor": {
-            "id": 15,
-            "name": "omar mohammed",
-            "gender": "male",
-            "age": 28
-        },
-        "actor_id": 15
-    }
+    "Actor": {
+        "age": "30",
+        "gender": "Female",
+        "id": 1,
+        "name": "Sara"
+    },
+    "success": true
+}
     ```
 
 #### PATCH /movies
