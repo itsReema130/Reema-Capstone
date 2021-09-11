@@ -29,7 +29,7 @@ def create_app(test_config=None):
     @app.route('/')
     def get_greeting():
         excited = os.environ['EXCITED']
-        greeting = "Hello"
+        greeting = "Hi im Reema Alhammadi and this is my last project in FSND:)"
         if excited == 'true':
             greeting = greeting + "!!!!!"
         return  greeting
