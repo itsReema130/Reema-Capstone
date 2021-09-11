@@ -4,14 +4,12 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
-from werkzeug.exceptions import abort
 
-
-AUTH0_DOMAIN = 'dev-xudjg1cu.us.auth0.com'
+AUTH0_DOMAIN = 'dev-2z-rt5ew.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'capstone'
 
-
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -45,7 +43,7 @@ def get_token_auth_header():
             'code': 'authorization_header_missing',
             'description': 'Authorization header is expected.'
         }, 401)
-    print(auth,len(auth))
+
     parts = auth.split()
     if parts[0].lower() != 'bearer':
         raise AuthError({
@@ -83,6 +81,7 @@ def get_token_auth_header():
 
 
 def check_permissions(permission, payload):
+    
     #raise an AuthError if permissions are not included in the payload
     if 'permissions' not in payload:
         raise AuthError({
@@ -113,6 +112,7 @@ def check_permissions(permission, payload):
 
 
 def verify_decode_jwt(token):
+    
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)

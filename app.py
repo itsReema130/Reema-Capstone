@@ -88,11 +88,12 @@ def create_app(test_config=None):
 
     @app.errorhandler(AuthError)
     def auth_error(error):
+        print(error)
         return jsonify({
             "success": False,
-            "error": 401,
+            "error": 400,
             "message": "unauthorized."
-        }), 401
+        }), 400
     return app
 
 
