@@ -93,6 +93,7 @@ def create_app(test_config=None):
             "error": 401,
             "message": "You are no authorized."
         }), 401
+    return app
 
 
 app = create_app()
