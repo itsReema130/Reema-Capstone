@@ -47,6 +47,27 @@ def create_app(test_config=None):
             'movies': movies
         })
 
+    @app.route('/movies', methods=['POST'])
+    @requires_auth('post:movies')
+    def add_movies(payload):
+        try:
+            request_data = request.get_json()
+            release = datetime.utcnow()
+            if 'title' not in request_data:
+                abort(400)
+
+            if 'release_date' in request_data:
+                release = request_data['release_date']
+
+            movie = Movies(title=request_data['title'], release=release)
+            movie.insert()
+
+            return jsonify({'success': True, 'movie': movie.format(),
+                        'movie_id': movie.id})
+
+        except Exception:
+            print(sys.exc_info())
+            abort(500)
  
 
 
